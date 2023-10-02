@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbSirketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblMusteriler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="adres" Type="nvarchar" MaxLength="50" />
+          <Property Name="tel" Type="nvarchar" MaxLength="50" />
+          <Property Name="durum" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblSatisler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunID" Type="int" />
+          <Property Name="musteriID" Type="int" />
+          <Property Name="tarih" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="tblUrunler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="fiyat" Type="float" />
+          <Property Name="durum" Type="bit" />
+        </EntityType>
+        <Association Name="FK_tblSatisler_tblMusteriler">
+          <End Role="tblMusteriler" Type="Self.tblMusteriler" Multiplicity="0..1" />
+          <End Role="tblSatisler" Type="Self.tblSatisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMusteriler">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSatisler">
+              <PropertyRef Name="musteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSatisler_tblUrunler">
+          <End Role="tblUrunler" Type="Self.tblUrunler" Multiplicity="0..1" />
+          <End Role="tblSatisler" Type="Self.tblSatisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUrunler">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSatisler">
+              <PropertyRef Name="UrunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SatisListesi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SatisListesi2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="dbSirketModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMusteriler" EntityType="Self.tblMusteriler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSatisler" EntityType="Self.tblSatisler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUrunler" EntityType="Self.tblUrunler" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblSatisler_tblMusteriler" Association="Self.FK_tblSatisler_tblMusteriler">
+            <End Role="tblMusteriler" EntitySet="tblMusteriler" />
+            <End Role="tblSatisler" EntitySet="tblSatisler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSatisler_tblUrunler" Association="Self.FK_tblSatisler_tblUrunler">
+            <End Role="tblUrunler" EntitySet="tblUrunler" />
+            <End Role="tblSatisler" EntitySet="tblSatisler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbSirketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblMusteriler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="durum" Type="Boolean" />
+          <NavigationProperty Name="tblSatisler" Relationship="dbSirketModel.FK_tblSatisler_tblMusteriler" FromRole="tblMusteriler" ToRole="tblSatisler" />
+        </EntityType>
+        <EntityContainer Name="dbSirketEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblMusteriler" EntityType="Self.tblMusteriler" />
+          <EntitySet Name="tblUrunler" EntityType="dbSirketModel.tblUrunler" />
+          <EntitySet Name="sysdiagrams" EntityType="dbSirketModel.sysdiagrams" />
+          <EntitySet Name="tblSatisler" EntityType="dbSirketModel.tblSatisler" />
+          <AssociationSet Name="FK_tblSatisler_tblMusteriler" Association="dbSirketModel.FK_tblSatisler_tblMusteriler">
+            <End Role="tblMusteriler" EntitySet="tblMusteriler" />
+            <End Role="tblSatisler" EntitySet="tblSatisler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSatisler_tblUrunler" Association="dbSirketModel.FK_tblSatisler_tblUrunler">
+            <End Role="tblUrunler" EntitySet="tblUrunler" />
+            <End Role="tblSatisler" EntitySet="tblSatisler" />
+          </AssociationSet>
+          <FunctionImport Name="SatisListesi" ReturnType="Collection(dbSirketModel.SatisListesi_Result)" />
+          <FunctionImport Name="SatisListesi2" ReturnType="Collection(dbSirketModel.SatisListesi2_Result)" />
+        </EntityContainer>
+        <EntityType Name="tblUrunler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fiyat" Type="Double" />
+          <Property Name="durum" Type="Boolean" />
+          <NavigationProperty Name="tblSatisler" Relationship="dbSirketModel.FK_tblSatisler_tblUrunler" FromRole="tblUrunler" ToRole="tblSatisler" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblSatisler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunID" Type="Int32" />
+          <Property Name="musteriID" Type="Int32" />
+          <Property Name="tarih" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblMusteriler" Relationship="dbSirketModel.FK_tblSatisler_tblMusteriler" FromRole="tblSatisler" ToRole="tblMusteriler" />
+          <NavigationProperty Name="tblUrunler" Relationship="dbSirketModel.FK_tblSatisler_tblUrunler" FromRole="tblSatisler" ToRole="tblUrunler" />
+        </EntityType>
+        <Association Name="FK_tblSatisler_tblMusteriler">
+          <End Type="dbSirketModel.tblMusteriler" Role="tblMusteriler" Multiplicity="0..1" />
+          <End Type="dbSirketModel.tblSatisler" Role="tblSatisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMusteriler">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSatisler">
+              <PropertyRef Name="musteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSatisler_tblUrunler">
+          <End Type="dbSirketModel.tblUrunler" Role="tblUrunler" Multiplicity="0..1" />
+          <End Type="dbSirketModel.tblSatisler" Role="tblSatisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUrunler">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblSatisler">
+              <PropertyRef Name="UrunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SatisListesi_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ad" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Column1" Nullable="true" MaxLength="101" />
+          <Property Type="DateTime" Name="tarih" Nullable="true" Precision="16" />
+        </ComplexType>
+        <ComplexType Name="SatisListesi2_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="URUN__ADI_" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AD_SOYAD_" Nullable="true" MaxLength="101" />
+          <Property Type="DateTime" Name="tarih" Nullable="true" Precision="16" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbSirketModelStoreContainer" CdmEntityContainer="dbSirketEntities">
+          <EntitySetMapping Name="tblMusteriler">
+            <EntityTypeMapping TypeName="dbSirketModel.tblMusteriler">
+              <MappingFragment StoreEntitySet="tblMusteriler">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="soyad" ColumnName="soyad" />
+                <ScalarProperty Name="adres" ColumnName="adres" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="durum" ColumnName="durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUrunler">
+            <EntityTypeMapping TypeName="dbSirketModel.tblUrunler">
+              <MappingFragment StoreEntitySet="tblUrunler">
+                <ScalarProperty Name="durum" ColumnName="durum" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="dbSirketModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSatisler">
+            <EntityTypeMapping TypeName="dbSirketModel.tblSatisler">
+              <MappingFragment StoreEntitySet="tblSatisler">
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+                <ScalarProperty Name="musteriID" ColumnName="musteriID" />
+                <ScalarProperty Name="UrunID" ColumnName="UrunID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SatisListesi" FunctionName="dbSirketModel.Store.SatisListesi">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbSirketModel.SatisListesi_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SatisListesi2" FunctionName="dbSirketModel.Store.SatisListesi2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbSirketModel.SatisListesi2_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="URUN__ADI_" ColumnName="URUN  ADI " />
+                <ScalarProperty Name="AD_SOYAD_" ColumnName="AD SOYAD " />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

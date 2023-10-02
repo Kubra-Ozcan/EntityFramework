@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="618a2ffc2aa3484ab594a77660f51436" Name="Diagram1">
+        <EntityTypeShape EntityType="dbSirketModel.tblMusteriler" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbSirketModel.tblUrunler" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="dbSirketModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="dbSirketModel.tblSatisler" Width="1.5" PointX="6" PointY="0.875" />
+        <AssociationConnector Association="dbSirketModel.FK_tblSatisler_tblMusteriler" />
+        <AssociationConnector Association="dbSirketModel.FK_tblSatisler_tblUrunler" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
